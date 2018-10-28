@@ -144,7 +144,7 @@ def update_frame(i):
         Text object to show the current value of theta
     """
 
-    # Generate data.  In this particulate case, x, y pos of the curve does not move
+    # Generate data.  In this particulate case, x, y pos of the curve do not move
     # so we can move the generator out of this function to further optimize.
     # However, if you want to move the curve position for each frame, you need to have the generator here.
     theta = np.linspace(start=0, stop=NUM_LOOPS * (2 * np.pi), num=NUM_DATA_POINTS)
