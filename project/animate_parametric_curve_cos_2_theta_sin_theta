@@ -134,6 +134,11 @@ def init_frame():
 def update_frame(i):
     """Update a single animation frame
 
+    Parameters
+    ----------
+    i : int
+    Frame index of the animation
+
     Returns
     -------
     RenderData.plotted_line
