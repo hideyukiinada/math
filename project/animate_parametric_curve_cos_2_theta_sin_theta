@@ -19,16 +19,11 @@ References
 
 Notes
 -----
-    1. RenderData class
-    This class is defined to avoid making rendered data objects global.
-    This is because update frame and init frame call back functions do not have access to
-    loca
-
-    2. TeX
+    1. TeX
     Additional package that supports TeX may be required depending on your matplotlib set up.
     If you don't have a TeX set up, you can comment out two plt.rc() lines and tweak messages that have math symbols.
 
-    3. Virtualenv
+    2. Virtualenv
     I use virtualenv to run this.  I haven't tried in other Python environment, but it should work if the required
     Python packages are in place.
 
