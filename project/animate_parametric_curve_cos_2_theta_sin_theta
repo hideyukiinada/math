@@ -25,7 +25,7 @@ Notes
     loca
 
     2. TeX
-    Additional package that supports TeX may be required depending on your matplot lib set up.
+    Additional package that supports TeX may be required depending on your matplotlib set up.
     If you don't have a TeX set up, you can comment out two plt.rc() lines and tweak messages that have math symbols.
 
     3. Virtualenv
