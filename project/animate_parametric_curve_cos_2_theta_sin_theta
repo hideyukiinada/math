@@ -22,7 +22,15 @@ Notes
     1. RenderData class
     This class is defined to avoid making rendered data objects global.
     This is because update frame and init frame call back functions do not have access to
-    locally defined variables.
+    loca
+
+    2. TeX
+    Additional package that supports TeX may be required depending on your matplot lib set up.
+    If you don't have a TeX set up, you can comment out two plt.rc() lines and tweak messages that have math symbols.
+
+    3. Virtualenv
+    I use virtualenv to run this.  I haven't tried in other Python environment, but it should work if the required
+    Python packages are in place.
 
 __author__ = "Hide Inada"
 __copyright__ = "Copyright 2018, Hide Inada"
@@ -60,131 +68,154 @@ LABEL_POSITION_Y = 0.05  # (0, 0) is bottom-left
 OUTPUT_VIDEO_FILE = 'parametric_curve_demo.mp4'
 
 
-class RenderData:
-    """ Data wrapper for objects to be rendered. """
-    plotted_line = None
-    circle = None
-    theta_text = None
+class RenderCurve:
+    def __init__(self):
+        """ Initiailze objects to be rendered.
 
+        Parameters
+        ----------
+        self: class reference
+            Reference to this instance
+        """
 
-def set_up_plot():
-    """Set up matplotlib's data objects including plot and axes
+        self.plotted_line = None
+        self.circle = None
+        self.theta_text = None
 
-    Returns
-    -------
-    fig
-        Top-level container of the plot
-    """
+    def set_up_plot(self):
+        """Set up matplotlib's data objects including plot and axes
 
-    # Set up Tex to use in title and text.
-    plt.rc('text', usetex=True)
-    plt.rc('font', family=BASE_TEXT_FONT)
+        Parameters
+        ----------
+        self: class reference
+            Reference to this instance
 
-    fig = plt.figure(figsize=(IMAGE_WIDTH / DPI, IMAGE_HEIGHT / DPI),
-                     dpi=DPI)  # fig size is in inch
+        Returns
+        -------
+        fig
+            Top-level container of the plot
+        """
 
-    ax = fig.add_subplot(111,  # 1 row high, 1 col wide at index #1
-                         aspect='equal',
-                         autoscale_on=False,
-                         xlabel='x',
-                         ylabel='y',
-                         xlim=PLOT_X_LIMIT,
-                         ylim=PLOT_Y_LIMIT)
+        # Set up Tex to use in title and text.
+        plt.rc('text', usetex=True)
+        plt.rc('font', family=BASE_TEXT_FONT)
 
-    plt.title(PLOT_TITLE, fontsize=TITLE_FONT_SIZE, color=TITLE_COLOR)
+        fig = plt.figure(figsize=(IMAGE_WIDTH / DPI, IMAGE_HEIGHT / DPI),
+                         dpi=DPI)  # fig size is in inch
 
-    # Add a circle to the plot
-    RenderData.circle = patches.Circle(xy=(0, 0),  # center position of the circle
-                                       radius=CIRCLE_RADIUS,
-                                       facecolor=CIRCLE_FACE_COLOR)  # Fill color.  Set to red
+        ax = fig.add_subplot(111,  # 1 row high, 1 col wide at index #1
+                             aspect='equal',
+                             autoscale_on=False,
+                             xlabel='x',
+                             ylabel='y',
+                             xlim=PLOT_X_LIMIT,
+                             ylim=PLOT_Y_LIMIT)
 
-    ax.add_patch(RenderData.circle)
-    RenderData.plotted_line, = ax.plot([], [], color=LINE_COLOR)
-    RenderData.theta_text = ax.text(LABEL_POSITION_X,
-                                    LABEL_POSITION_Y,
-                                    '',
-                                    transform=ax.transAxes,
-                                    color=LABEL_LABEL_COLOR,
-                                    bbox=dict(facecolor=LABEL_BACKGROUND_COLOR,
-                                              alpha=LABEL_BACKGROUND_ALPHA))
+        plt.title(PLOT_TITLE, fontsize=TITLE_FONT_SIZE, color=TITLE_COLOR)
 
-    return fig
+        # Add a circle to the plot
+        self.circle = patches.Circle(xy=(0, 0),  # center position of the circle
+                                     radius=CIRCLE_RADIUS,
+                                     facecolor=CIRCLE_FACE_COLOR)  # Fill color.  Set to red
 
+        ax.add_patch(self.circle)
+        self.plotted_line, = ax.plot([], [], color=LINE_COLOR)
+        self.theta_text = ax.text(LABEL_POSITION_X,
+                                  LABEL_POSITION_Y,
+                                  '',
+                                  transform=ax.transAxes,
+                                  color=LABEL_LABEL_COLOR,
+                                  bbox=dict(facecolor=LABEL_BACKGROUND_COLOR,
+                                            alpha=LABEL_BACKGROUND_ALPHA))
 
-def init_frame():
-    """Initialize the animation frame
+        return fig
 
-    Returns
-    -------
-    RenderData.plotted_line
-        Line object to be rendered
-    RenderData.circle
-        Circle object to be rendered
-    RenderData.theta_text
-        Text object to show the current value of theta
-    """
+    def init_frame(self):
+        """Initialize the animation frame
 
-    RenderData.plotted_line.set_data([], [])
-    RenderData.circle.center = (0, 0)
-    RenderData.theta_text.set_text("")
+        Parameters
+        ----------
+        self: class reference
+            Reference to this instance
 
-    return RenderData.plotted_line, RenderData.circle, RenderData.theta_text
+        Returns
+        -------
+        self.plotted_line
+            Line object to be rendered
+        self.circle
+            Circle object to be rendered
+        self.theta_text
+            Text object to show the current value of theta
+        """
 
+        self.plotted_line.set_data([], [])
+        self.circle.center = (0, 0)
+        self.theta_text.set_text("")
 
-def update_frame(i):
-    """Update a single animation frame
+        return self.plotted_line, self.circle, self.theta_text
 
-    Parameters
-    ----------
-    i : int
-    Frame index of the animation
+    def update_frame(self, i):
+        """Update a single animation frame
+    
+        Parameters
+        ----------
+        self: class reference
+            Reference to this instance
+        i : int
+            Frame index of the animation
+    
+        Returns
+        -------
+        self.plotted_line
+            Line object to be rendered
+        self.circle
+            Circle object to be rendered
+        self.theta_text
+            Text object to show the current value of theta
+        """
 
-    Returns
-    -------
-    RenderData.plotted_line
-        Line object to be rendered
-    RenderData.circle
-        Circle object to be rendered
-    RenderData.theta_text
-        Text object to show the current value of theta
-    """
+        # Generate data.  In this particulate case, x, y pos of the curve do not move
+        # so we can move the generator out of this function to further optimize.
+        # However, if you want to move the curve position for each frame, you need to have the generator here.
+        theta = np.linspace(start=0, stop=NUM_LOOPS * (2 * np.pi), num=NUM_DATA_POINTS)
+        r = 1  # radius
+        x = r * np.cos(2 * theta)
+        y = r * np.sin(theta)
 
-    # Generate data.  In this particulate case, x, y pos of the curve do not move
-    # so we can move the generator out of this function to further optimize.
-    # However, if you want to move the curve position for each frame, you need to have the generator here.
-    theta = np.linspace(start=0, stop=NUM_LOOPS * (2 * np.pi), num=NUM_DATA_POINTS)
-    r = 1  # radius
-    x = r * np.cos(2 * theta)
-    y = r * np.sin(theta)
+        self.plotted_line.set_data(x, y)
+        self.circle.center = (x[i], y[i])
 
-    RenderData.plotted_line.set_data(x, y)
-    RenderData.circle.center = (x[i], y[i])
+        current_theta_in_pi = theta[i] / np.pi
+        self.theta_text.set_text(r"$\theta = %0.2f \pi \,rad$" % (current_theta_in_pi))
 
-    current_theta_in_pi = theta[i] / np.pi
-    RenderData.theta_text.set_text(r"$\theta = %0.2f \pi \,rad$" % (current_theta_in_pi))
+        return self.plotted_line, self.circle, self.theta_text
 
-    return RenderData.plotted_line, RenderData.circle, RenderData.theta_text
+    def plot(self):
+        """Plot animation
 
+        Parameters
+        ----------
+        self: class reference
+            Reference to this instance
+        """
+        fig = self.set_up_plot()
 
-def plot():
-    """Plot animation"""
-    fig = set_up_plot()
+        animation_rendered = animation.FuncAnimation(fig,
+                                                     self.update_frame,
+                                                     init_func=self.init_frame,
+                                                     frames=NUM_DATA_POINTS,
+                                                     interval=DELAY_BETWEEN_FRAMES,
+                                                     blit=True)
 
-    animation_rendered = animation.FuncAnimation(fig,
-                                                 update_frame,
-                                                 init_func=init_frame,
-                                                 frames=NUM_DATA_POINTS,
-                                                 interval=DELAY_BETWEEN_FRAMES,
-                                                 blit=True)
-
-    # To save to a video, uncomment the below line and comment out plt.show()
-    animation_rendered.save(OUTPUT_VIDEO_FILE, fps=30, extra_args=['-vcodec', 'libx264'])
-    # plt.show()
+        # To save to a video, uncomment the below line and comment out plt.show()
+        # animation_rendered.save(OUTPUT_VIDEO_FILE, fps=30, extra_args=['-vcodec', 'libx264'])
+        plt.show()
 
 
 def main():
     """Defines an application's main functionality"""
-    plot()
+    curve = RenderCurve();
+    curve.plot()
 
 
 if __name__ == "__main__":
