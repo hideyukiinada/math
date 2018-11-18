@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Plot sigmoid using matplotlib
+Plot the derivative of sigmoid using matplotlib
 
 __author__ = "Hide Inada"
 __copyright__ = "Copyright 2018, Hide Inada"
@@ -13,8 +13,10 @@ from project.plothelper import PlotHelper
 
 def plot():
     """Plot the function"""
-    sigmoid = lambda x: 1 / (1 + np.e ** (-x))  # define f(x)
-    PlotHelper.plot(sigmoid, plot_title=r"$Sigmoid$", y_coord_min=-1, y_coord_max=2)
+    def sigmoid(x):
+        return 1 / (1 + np.e ** (-x))
+    dsigmoid_dx = lambda x: sigmoid(x)*(1 - sigmoid(x)) # define f(x)
+    PlotHelper.plot(dsigmoid_dx, plot_title=r"$\frac{d sigmoid(x)}{dx} = sigmoid(x)(1-sigmoid(x))$", y_coord_min=-1, y_coord_max=2)
 
 
 def main():
