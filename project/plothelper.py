@@ -34,14 +34,17 @@ class PlotHelper():
              y_coord_min=-1,
              y_coord_max=10):
         """
-        Plot the function using matplotlib
+        Plot the function using matplotlib.
+
+        You can pass a function or a list of functions.  Type check is done internally to determine
+        the data type of the first argument and plots multiple graphs if a list of functions are passed.
 
         Parameters
         ----------
-            f: function
-                Function to plot
+            f: function or list
+                Function to plot, or a list of functions
             plot_title: str
-                Title of the plot.  TeX notation is supported.
+                Title of the plot.  TeX notation is supported
             x_coord_min: int
                 Minimum value of x-coordinate
             x_coord_max: int
@@ -73,12 +76,18 @@ class PlotHelper():
         plt.yticks(np.arange(y_coord_min, y_coord_max + 1, 1))
         plt.grid()
 
-        x = np.linspace(x_coord_min, x_coord_max, NO_DATA_POINTS)
-        y = f(x)
-
         ax.axhline(color='#000000') # draw x-axis in black
         ax.axvline(color='#000000') # draw y-axis in black
 
-        plt.plot(x, y)
+        x = np.linspace(x_coord_min, x_coord_max, NO_DATA_POINTS)
+
+        # If a list of lambda is passed, plot for each function
+        if isinstance(f, list):
+            for actual_f in f:
+                y = actual_f(x)
+                plt.plot(x, y)
+        else:
+            y = f(x)
+            plt.plot(x, y)
 
         plt.show()

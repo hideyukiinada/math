@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+"""
+Plot y=1+e**(-x) using matplotlib
+
+__author__ = "Hide Inada"
+__copyright__ = "Copyright 2018, Hide Inada"
+__license__ = "The MIT License"
+__email__ = "hideyuki@gmail.com"
+"""
+import numpy as np
+from project.plothelper import PlotHelper
+
+
+def plot():
+    """Plot the function"""
+    sigmoid = lambda x: 1 / (1 + np.e ** (-x))  # define f(x)
+    PlotHelper.plot(sigmoid, plot_title=r"$Sigmoid$", y_coord_min=-1, y_coord_max=2)
+
+
+def main():
+    plot()
+
+
+if __name__ == "__main__":
+    main()
