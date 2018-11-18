@@ -75,6 +75,10 @@ class PlotHelper():
 
         x = np.linspace(x_coord_min, x_coord_max, NO_DATA_POINTS)
         y = f(x)
+
+        ax.axhline(color='#000000') # draw x-axis in black
+        ax.axvline(color='#000000') # draw y-axis in black
+
         plt.plot(x, y)
 
         plt.show()
