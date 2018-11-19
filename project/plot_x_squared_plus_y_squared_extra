@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+"""
+Plot two 3-D functions using matplotlib
+
+__author__ = "Hide Inada"
+__copyright__ = "Copyright 2018, Hide Inada"
+__license__ = "The MIT License"
+__email__ = "hideyuki@gmail.com"
+"""
+import numpy as np
+from project.plothelper import PlotHelper
+
+
+def plot():
+    """Plot the function"""
+    z = [lambda x, y: x ** 2 + y ** 2, lambda x, y: x - y]  # define f(x)
+    PlotHelper.plot(z, plot_title=r"$z = x^2 + y^2, z=x-y$", y_coord_min=-5, y_coord_max=5, dimensions=3)
+
+
+def main():
+    plot()
+
+
+if __name__ == "__main__":
+    main()
