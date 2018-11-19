@@ -12,5 +12,5 @@ Code related to fun &amp; exciting things about math
 | plot_1_plus_e_to_the_minus_x | Plot y = 1 + e**(-x) using matplotlib. | ![sample](assets/images/1_plus_e_to_the_minus_x.png) |
 | plot_1_plus_e_to_the_minus_x_extra | Plot y = 1 + e**(-x) and sigmoid using matplotlib. | ![sample](assets/images/1_plus_e_to_the_minus_x_extra.png) |
 | plot_x_squared_plus_y_squared | Plot z = x**2 + y**2 using matplotlib. | ![sample](assets/images/x_squared_plus_y_squared.png) |
-| plot_x_squared_plus_y_squared_extra | Plot z = x**2 + y**2 and z = x - y using matplotlib. | |
+| plot_x_squared_plus_y_squared_extra | Plot z = x**2 + y**2 and z = x - y using matplotlib. |![sample](assets/images/x_squared_plus_y_squared_extra.png) |
 | plothelper.py | A helper class to deal with matplotlib parameter settings so that the caller can focus on the function definition. | |
