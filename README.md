@@ -5,7 +5,7 @@ Code related to fun &amp; exciting things about math
 
 | File name | Note | |
 |---|---|---|
-| plothelper.py | A helper class to deal with matplotlib parameter settings so that the caller can focus on the function definition. | |
+| plothelper.py | A helper class to deal with matplotlib parameter settings so that the caller can focus on the function definition.  Check out below examples to see that you only need a few lines of code to plot a graph using this class. | |
 | plot_sigmoid | Plot a sigmoid function using matplotlib. | ![sample](assets/images/sigmoid.png) |
 | plot_sigmoid_derivative | Plot a derivative of the sigmoid function using matplotlib. | ![sample](assets/images/sigmoid_derivative.png) |
 | plot_e | Plot y = e\*\*x (Euler's number) using matplotlib. | ![sample](assets/images/e.png) |
