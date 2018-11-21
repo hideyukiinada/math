@@ -1,0 +1,25 @@
+#!/usr/bin/env python
+"""
+Plot sigmoid using matplotlib
+
+__author__ = "Hide Inada"
+__copyright__ = "Copyright 2018, Hide Inada"
+__license__ = "The MIT License"
+__email__ = "hideyuki@gmail.com"
+"""
+import numpy as np
+from project.plothelper import PlotHelper
+
+
+def plot():
+    """Plot the function"""
+    f = lambda x: np.e**x - np.e ** (-x)
+    PlotHelper.plot(f, plot_title=r"$y=e^{x} - e^{-x}$", y_coord_min=-2, y_coord_max=10)
+
+
+def main():
+    plot()
+
+
+if __name__ == "__main__":
+    main()
